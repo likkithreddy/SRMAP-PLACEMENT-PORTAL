@@ -99,13 +99,13 @@ const RecruiterDashboard = () => {
                   <button
                     className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600"
                     onClick={() => openEditModal(job)}
-                  >
+                    style={{ backgroundColor: "#4D4D29" }}>
                     Edit
                   </button>
                   <button
                     className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
                     onClick={() => handleDelete(job._id)}
-                  >
+                    style={{ backgroundColor: "#4D4D29" }}>
                     Delete
                   </button>
                 </div>

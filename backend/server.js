@@ -7,6 +7,7 @@ import recruiterRouter from "./routes/recruiterRoutes.js";
 import jobRouter from "./routes/jobRoutes.js";
 import applicationRouter from "./routes/applicationRoutes.js";
 import profileRouter from "./routes/profileRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 
 
 
@@ -24,6 +25,7 @@ app.use(cors())
 // api endpoints 
 app.use("/api/students/auth",studentRouter)
 app.use("/api/recruiters/auth",recruiterRouter)
+app.use("/api/auth",authRouter)
 app.use("/api/jobs",jobRouter)
 app.use("/api/jobs/apply",applicationRouter)
 app.use("/api/user/profile",profileRouter)

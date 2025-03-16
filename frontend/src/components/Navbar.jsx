@@ -39,7 +39,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link to="/recruiter-dashboard" className="hover:underline">Dashboard</Link>
-            <Link to="/jobs" className="hover:underline">Jobs</Link>
+            {/* <Link to="/jobs" className="hover:underline">Jobs</Link> */}
             <Link to="/post-job" className="hover:underline">Post Job</Link>
             <Link to="/applications" className="hover:underline">Applications</Link>
           </>
@@ -81,7 +81,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-blue-700 flex flex-col items-center space-y-4 py-4 md:hidden">
+        <div className="absolute top-16 left-0 w-full bg-blue-700 flex flex-col items-center space-y-4 py-4 md:hidden" style={{ backgroundColor: "#4D4D29" }}>
           {userType === "student" ? (
             <>
               <Link to="/student-dashboard" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>

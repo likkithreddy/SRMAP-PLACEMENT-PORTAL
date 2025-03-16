@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema(
     zipCode: String,
     companyLogo: String,
     authorizationLetter: String,
+    otp: { type: String, required: false },
+    otpExpires: { type: Date, required: false },
   },
   {
     timestamps: true,

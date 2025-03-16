@@ -72,7 +72,7 @@ const PostJob = () => {
       if (response.status === 201) {
         toast.success("Job Posted Successfully!");
         setTimeout(() => {
-          navigate("/jobs");
+          navigate("/recruiter-dashboard");
           
         }, 1000);
         setFormData({

@@ -25,13 +25,18 @@ const applicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Pending", "Accepted", "Rejected"],
+    enum: ["Pending", "Accepted", "Rejected","Interview Scheduled"],
     default: "Pending", // Default status when application is submitted
   },
   appliedAt: {
     type: Date,
     default: Date.now, // Timestamp when the student applied
   },
+  interviewDate: {
+    type: Date,
+    default: null, // Set when interview is scheduled
+  },
+  
   title: { type: String, required: true },
   company: { type: String, required: true },
   location: { type: String, required: true },

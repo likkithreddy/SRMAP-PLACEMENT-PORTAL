@@ -66,7 +66,7 @@ const RecruiterRegister = () => {
 
         login("recruiter");
         setTimeout(() => {
-          navigate("/jobs");
+          navigate("/recruiter-dashboard");
         }, 2000);
       } else {
         alert(`Registration failed: ${response.data.message}`);
@@ -115,7 +115,7 @@ const RecruiterRegister = () => {
                     Company Website
                   </label>
                   <input
-                    type="url"
+                    type="text"
                     name="companyWebsite"
                     value={formData.companyWebsite}
                     onChange={handleChange}

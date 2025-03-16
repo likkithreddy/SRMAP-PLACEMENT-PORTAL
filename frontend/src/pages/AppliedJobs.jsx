@@ -104,7 +104,7 @@ const AppliedJobs = () => {
               </p>
 
               {/* Status Badge */}
-              <p className="text-center mt-4">
+              <p className=" mt-4">
                 <span
                   className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
                     job.status === "Pending"

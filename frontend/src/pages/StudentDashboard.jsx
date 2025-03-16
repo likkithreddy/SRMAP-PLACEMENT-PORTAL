@@ -1,33 +1,69 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaBriefcase, FaCalendarAlt, FaClipboardList, FaUser } from "react-icons/fa";
+import { FaBriefcase, FaCalendarAlt, FaClipboardList } from "react-icons/fa";
 
 const StudentDashboard = () => {
-  const [userData, setUserData] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phoneNumber: "123-456-7890",
-    passportSizePhoto: "https://via.placeholder.com/100",
-  });
-
+  const [userData, setUserData] = useState({});
   const [dashboardStats, setDashboardStats] = useState({
-    applications: 8,
-    interviews: 3,
-    offers: 2,
+    applications: 0,
+    interviews: 0,
+    offers: 0,
   });
+  const [upcomingInterviews, setUpcomingInterviews] = useState([]);
+  const [jobListings, setJobListings] = useState([]);
 
-  const [upcomingInterviews, setUpcomingInterviews] = useState([
-    { id: 1, companyName: "Google", position: "Software Engineer", date: "March 10, 2025" },
-    { id: 2, companyName: "Microsoft", position: "Cloud Developer", date: "March 15, 2025" },
-    { id: 3, companyName: "Amazon", position: "AI Engineer", date: "March 20, 2025" },
-  ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        // Fetch user profile
+        const { data: userProfile } = await axios.get("http://localhost:4000/api/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUserData(userProfile.user);
 
-  const [jobListings, setJobListings] = useState([
-    { id: 1, title: "Full Stack Developer", company: "Amazon", location: "Remote", salary: "$80K" },
-    { id: 2, title: "AI Engineer", company: "Tesla", location: "California, USA", salary: "$100K" },
-    { id: 3, title: "Cybersecurity Analyst", company: "IBM", location: "New York, USA", salary: "$90K" },
-  ]);
+        // Fetch applied jobs
+        const { data } = await axios.get("http://localhost:4000/api/jobs/apply/applied", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const appliedJobs = data.appliedJobs;
+
+        // Fetch job listings
+        const { data: jobsData } = await axios.get("http://localhost:4000/api/jobs", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Set dashboard stats
+        setDashboardStats({
+          applications: appliedJobs.length,
+          interviews: appliedJobs.filter((job) => job.status === "Interview Scheduled").length,
+          offers: appliedJobs.filter((job) => job.status === "Offer Received").length,
+        });
+
+        // Set upcoming interviews (add mode/meetingLink/location if available)
+        setUpcomingInterviews(
+          appliedJobs
+            .filter((job) => job.status === "Interview Scheduled")
+            .map((job) => ({
+              id: job._id,
+              companyName: job.company,
+              position: job.position,
+              date: job.interviewDate,
+              status: job.status, 
+              mode: job.mode || "online",      // e.g., "online" or "in-person"
+              meetingLink: job.meetingLink || "",
+              location: job.location || "N/A",
+            }))
+        );
+
+        setJobListings(jobsData.jobs);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-20 bg-gray-100 min-h-screen p-6">
@@ -38,7 +74,7 @@ const StudentDashboard = () => {
           <p className="text-gray-600">Your student dashboard overview</p>
         </div>
         <img
-          src={userData.passportSizePhoto}
+          src={userData.passportSizePhoto || "https://via.placeholder.com/100"}
           alt="Profile"
           className="w-16 h-16 rounded-full border-2 border-gray-300"
         />
@@ -78,15 +114,51 @@ const StudentDashboard = () => {
           {upcomingInterviews.length === 0 ? (
             <p className="text-gray-600">No upcoming interviews</p>
           ) : (
-            <ul>
+            <ul className="space-y-4">
               {upcomingInterviews.map((interview) => (
-                <li key={interview.id} className="border-b py-3">
-                  <div className="flex justify-between">
+                <li
+                  key={interview.id}
+                  className="p-4 border border-gray-200 rounded-lg hover:shadow transition"
+                >
+                  {/* Header: Company & Position */}
+                  <div className="flex items-center justify-between mb-2">
                     <div>
-                      <p className="text-lg font-semibold">{interview.companyName}</p>
+                      <h4 className="text-lg font-semibold text-gray-800">
+                        {interview.companyName}
+                      </h4>
                       <p className="text-gray-600">{interview.position}</p>
                     </div>
-                    <p className="text-gray-500">{interview.date}</p>
+                    <span className="text-sm text-gray-500">
+                      {new Date(interview.date).toLocaleString()}
+                    </span>
+                  </div>
+
+                  {/* Additional Info: mode, meetingLink, location, status */}
+                  <div className="mt-2 text-sm text-gray-600">
+                    <p className="mb-1">
+                      <strong>Mode:</strong>{" "}
+                      {interview.mode === "online" ? "Online" : "In-person"}
+                    </p>
+                    {interview.mode === "online" ? (
+                      <p className="mb-1">
+                        <strong>Meeting Link:</strong>{" "}
+                        <a
+                          href={interview.meetingLink}
+                          className="text-blue-500 hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {interview.meetingLink}
+                        </a>
+                      </p>
+                    ) : (
+                      <p className="mb-1">
+                        <strong>Location:</strong> {interview.location}
+                      </p>
+                    )}
+                    <p className="mt-2 inline-block px-2 py-1 text-sm bg-green-100 text-green-700 rounded">
+                      {interview.status}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -108,10 +180,17 @@ const StudentDashboard = () => {
                   <div className="flex justify-between">
                     <div>
                       <p className="text-lg font-semibold">{job.title}</p>
-                      <p className="text-gray-600">{job.company} - {job.location}</p>
+                      <p className="text-gray-600">
+                        {job.company} - {job.location}
+                      </p>
                       <p className="text-gray-500 font-semibold">{job.salary}</p>
                     </div>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded">Apply</button>
+                    <button
+                      className="bg-blue-500 text-white px-4 py-0.5 rounded"
+                      style={{ backgroundColor: "#4D4D29" }}
+                    >
+                      Apply
+                    </button>
                   </div>
                 </li>
               ))}

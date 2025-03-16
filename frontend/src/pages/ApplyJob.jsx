@@ -63,7 +63,13 @@ const ApplyJob = () => {
         }
       );
 
-      toast.success(response.data.message);
+      if(response.data.success){
+        toast.success(response.data.message);
+      }
+      else{
+        toast.error(response.data.message);
+
+      }
       if (response.status === 200) {
         setTimeout(() => navigate("/jobs"), 2000); // Redirect after success
       }

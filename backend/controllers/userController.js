@@ -14,7 +14,7 @@ const studentLogin = async (req, res) => {
         // console.log(user);
 
         if (!user) {
-            return res.status(401).json({ message: 'User does not exits' });
+            return res.status(401).json({ message: 'User does not exists' });
         }
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {

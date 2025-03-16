@@ -117,7 +117,7 @@ const ProfilePage = () => {
                     </p>
                   )
                 ) : typeof userData[key] === "string" && userData[key].includes("http") ? (
-                  key.includes("resume") || key.includes("authorizationLetter") ? (
+                  key.includes("resume") || key.includes("authorizationLetter") ||key.includes("companyWebsite") ? (
                     <a href={userData[key]} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                       View {key.replace(/([A-Z])/g, " $1")}
                     </a>

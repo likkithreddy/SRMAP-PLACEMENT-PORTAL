@@ -16,6 +16,11 @@ import Jobs from './pages/Jobs'
 import RecruiterDashboard from './pages/RecruiterDashboard'
 import StudentDashboard from './pages/StudentDashboard'
 import ApplyJob from './pages/ApplyJob'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import JobDetails from './pages/JobDetails'
+
+// import VerifyCode from './pages/VerifyCode'
 
 
 const App = () => {
@@ -38,6 +43,10 @@ const App = () => {
           <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/apply-job/:jobId" element={<ApplyJob />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/job-details/:jobId" element={<JobDetails />} />
+          {/* <Route path="/verifycode" element={<VerifyCode />} /> */}
 
 
 
