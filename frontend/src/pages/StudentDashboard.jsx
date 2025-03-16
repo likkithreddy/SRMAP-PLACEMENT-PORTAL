@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom"
 import { FaBriefcase, FaCalendarAlt, FaClipboardList } from "react-icons/fa";
 
 const StudentDashboard = () => {
@@ -185,12 +186,13 @@ const StudentDashboard = () => {
                       </p>
                       <p className="text-gray-500 font-semibold">{job.salary}</p>
                     </div>
+                    <Link to="/jobs">
                     <button
-                      className="bg-blue-500 text-white px-4 py-0.5 rounded"
+                      className="bg-blue-500 text-white px-4 py-4 rounded"
                       style={{ backgroundColor: "#4D4D29" }}
                     >
                       Apply
-                    </button>
+                    </button></Link>
                   </div>
                 </li>
               ))}
