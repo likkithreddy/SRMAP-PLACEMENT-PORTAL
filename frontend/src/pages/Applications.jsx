@@ -13,7 +13,7 @@ const Applications = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:4000/api/jobs/apply/applications",
+          "https://srmap-placement-portal.onrender.com/api/jobs/apply/applications",
           {
             headers: {
               "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const Applications = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:4000/api/jobs/apply/applications/${applicationId}`,
+        `https://srmap-placement-portal.onrender.com/api/jobs/apply/applications/${applicationId}`,
         { status: newStatus },
         {
           headers: {
@@ -70,7 +70,7 @@ const Applications = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:4000/api/jobs/apply/applications/${selectedApplication._id}`,
+        `https://srmap-placement-portal.onrender.com/api/jobs/apply/applications/${selectedApplication._id}`,
         { status: "Interview Scheduled", interviewDate },
         {
           headers: {
