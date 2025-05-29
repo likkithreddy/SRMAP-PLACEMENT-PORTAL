@@ -7,13 +7,15 @@ const Applications = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [interviewDate, setInterviewDate] = useState("");
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const fetchApplications = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "https://srmap-placement-portal.onrender.com/api/jobs/apply/applications",
+          `${baseURL}/api/jobs/apply/applications`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -35,7 +37,7 @@ const Applications = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `https://srmap-placement-portal.onrender.com/api/jobs/apply/applications/${applicationId}`,
+        `${baseURL}/api/jobs/apply/applications/${applicationId}`,
         { status: newStatus },
         {
           headers: {
@@ -70,7 +72,7 @@ const Applications = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `https://srmap-placement-portal.onrender.com/api/jobs/apply/applications/${selectedApplication._id}`,
+        `${baseURL}/api/jobs/apply/applications/${selectedApplication._id}`,
         { status: "Interview Scheduled", interviewDate },
         {
           headers: {
