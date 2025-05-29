@@ -12,25 +12,27 @@ const StudentDashboard = () => {
   });
   const [upcomingInterviews, setUpcomingInterviews] = useState([]);
   const [jobListings, setJobListings] = useState([]);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         // Fetch user profile
-        const { data: userProfile } = await axios.get("http://localhost:4000/api/user/profile", {
+        const { data: userProfile } = await axios.get(`${baseURL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(userProfile.user);
 
         // Fetch applied jobs
-        const { data } = await axios.get("http://localhost:4000/api/jobs/apply/applied", {
+        const { data } = await axios.get(`${baseURL}/api/jobs/apply/applied`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const appliedJobs = data.appliedJobs;
 
         // Fetch job listings
-        const { data: jobsData } = await axios.get("http://localhost:4000/api/jobs", {
+        const { data: jobsData } = await axios.get(`${baseURL}/api/jobs`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
