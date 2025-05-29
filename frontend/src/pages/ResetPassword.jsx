@@ -14,6 +14,8 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   const handleReset = async (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:4000/api/auth/reset-password", { email, password });
+      await axios.post(`${baseURL}/api/auth/reset-password`, { email, password });
       toast.success("Password reset successfully! Redirecting...");
 
       setTimeout(() => navigate("/login"), 2000);
