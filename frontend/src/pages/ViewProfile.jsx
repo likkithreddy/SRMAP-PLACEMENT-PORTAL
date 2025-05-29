@@ -8,11 +8,13 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
   const token = localStorage.getItem("token");
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/user/profile", {
+        const response = await axios.get(`${baseURL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -54,7 +56,7 @@ const ProfilePage = () => {
       if (userData.authorizationLetter instanceof File) {
         formData.append("authorizationLetter", userData.authorizationLetter);
       }
-      await axios.put("http://localhost:4000/api/user/profile/update", formData, {
+      await axios.put(`${baseURL}/api/user/profile/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
