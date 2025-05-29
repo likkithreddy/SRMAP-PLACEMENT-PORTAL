@@ -10,6 +10,8 @@ const RecruiterRegister = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [isRegistering, setIsRegistering] = useState(false);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -54,7 +56,7 @@ const RecruiterRegister = () => {
         }
       });
 
-      const response = await axios.post('http://localhost:4000/api/recruiters/auth/register', formDataToSend, {
+      const response = await axios.post(`${baseURL}/api/recruiters/auth/register`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
