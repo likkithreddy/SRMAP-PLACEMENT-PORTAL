@@ -9,12 +9,14 @@ const Jobs = () => {
   const [filterCategory, setFilterCategory] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
   const [jobs, setJobs] = useState([]);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   // Fetch job data from database
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/jobs",
+        const response = await axios.get(`${baseURL}/api/jobs`,
           {
             headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${localStorage.getItem("token")}` },
 
