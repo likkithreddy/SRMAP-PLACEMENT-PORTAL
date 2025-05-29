@@ -27,6 +27,8 @@ const StudentRegister = () => {
     password: '',
     confirmPassword: '',
   });
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
 
   const handleChange = (e) => {
@@ -56,7 +58,7 @@ const StudentRegister = () => {
         }
       });
 
-      const response = await axios.post('http://localhost:4000/api/students/auth/register', formDataToSend, {
+      const response = await axios.post(`${baseURL}/api/students/auth/register`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
