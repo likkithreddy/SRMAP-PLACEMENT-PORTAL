@@ -6,12 +6,14 @@ const RecruiterDashboard = () => {
   const [jobs, setJobs] = useState([]);
   const [editJob, setEditJob] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   // Fetch all jobs posted by the recruiter
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/jobs/recruiter",{
+        const response = await axios.get(`${baseURL}/api/jobs/recruiter`,{
         headers: { "Content-Type": "multipart/form-data",Authorization: `Bearer ${localStorage.getItem("token")}` },
 
         });
@@ -30,7 +32,7 @@ const RecruiterDashboard = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:4000/api/jobs/${jobId}`,{
+      await axios.delete(`${baseURL}/api/jobs/${jobId}`,{
         headers: { "Content-Type": "multipart/form-data",Authorization: `Bearer ${localStorage.getItem("token")}` },
 
       });
@@ -49,7 +51,7 @@ const RecruiterDashboard = () => {
   // Handle Job Update
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:4000/api/jobs/${editJob._id}`, editJob,{
+      await axios.put(`${baseURL}/api/jobs/${editJob._id}`, editJob,{
         headers: { "Content-Type": "multipart/form-data",Authorization: `Bearer ${localStorage.getItem("token")}` },
 
       });
