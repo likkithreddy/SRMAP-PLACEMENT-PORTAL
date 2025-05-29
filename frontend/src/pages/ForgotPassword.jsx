@@ -12,6 +12,8 @@ const ForgotPassword = () => {
   const [step, setStep] = useState(1); // Step 1: Enter Email, Step 2: Enter OTP
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   // Function to send OTP
   const handleSendOTP = async (e) => {
@@ -19,7 +21,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:4000/api/auth/forgot-password", { email });
+      const response = await axios.post(`${baseURL}/api/auth/forgot-password`, { email });
       toast.success("OTP sent to your email!");
       setStep(2); // Move to OTP verification step
     } catch (error) {
@@ -35,7 +37,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:4000/api/auth/verify-otp", { email, otp });
+      await axios.post(`${baseURL}/api/auth/verify-otp`, { email, otp });
       toast.success("OTP Verified! Redirecting...");
 
       setTimeout(() => {
