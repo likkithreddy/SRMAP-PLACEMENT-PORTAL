@@ -17,6 +17,8 @@ const Login = () => {
   const [role, setRole] = useState("student"); // Default role
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ const Login = () => {
     const toastId = toast.loading("Logging in...");
 
     try {
-      const url = `http://localhost:4000/api/${role === "student" ? "students" : "recruiters"}/auth/login`;
+      const url = `${baseURL}/api/${role === "student" ? "students" : "recruiters"}/auth/login`;
       const response = await axios.post(url, { email, password });
 
       console.log("Login Successful:", response.data);
