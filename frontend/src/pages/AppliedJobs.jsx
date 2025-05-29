@@ -8,6 +8,8 @@ const AppliedJobs = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {
@@ -19,7 +21,7 @@ const AppliedJobs = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:4000/api/jobs/apply/applied", {
+        const response = await axios.get(`${baseURL}/api/jobs/apply/applied`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -44,7 +46,7 @@ const AppliedJobs = () => {
     try {
 
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:4000/api/jobs/apply/applications/withdraw/${jobId}`, {
+      await axios.delete(`${baseURL}/api/jobs/apply/applications/withdraw/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
