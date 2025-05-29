@@ -8,13 +8,15 @@ const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const fetchJobDetails = async () => {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get(`http://localhost:4000/api/jobs/apply/${jobId}`, {
+        const response = await axios.get(`${baseURL}/api/jobs/apply/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
