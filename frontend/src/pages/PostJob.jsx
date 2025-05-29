@@ -22,6 +22,8 @@ const PostJob = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   // Handle Input Change
   const handleChange = (e) => {
@@ -65,7 +67,7 @@ const PostJob = () => {
       // console.log(formData);
       
       // ✅ Send Data to Backend
-      const response = await axios.post("http://localhost:4000/api/jobs", formDataToSend, {
+      const response = await axios.post(`${baseURL}/api/jobs`, formDataToSend, {
         headers: { "Content-Type": "multipart/form-data",Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
   
