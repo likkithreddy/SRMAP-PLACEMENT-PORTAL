@@ -10,12 +10,14 @@ const ApplyJob = () => {
   const [resume, setResume] = useState(null);
   const [applying, setApplying] = useState(false);
   const [job, setJob] = useState(null); // Store job details
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     // Fetch job details
     const fetchJob = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/jobs/${jobId}`, {
+        const response = await axios.get(`${baseURL}/api/jobs/${jobId}`, {
           headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         console.log("Fetched Job:", response.data);
@@ -56,7 +58,7 @@ const ApplyJob = () => {
       console.log("Applying for job with ID:", jobId);
 
       const response = await axios.post(
-        `http://localhost:4000/api/jobs/apply/${jobId}`,
+        `${baseURL}/api/jobs/apply/${jobId}`,
         formData,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
